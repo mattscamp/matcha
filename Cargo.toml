@@ -1,7 +1,10 @@
 [package]
-name = "str_search"
+name = "matcha"
 version = "0.1.0"
 authors = ["MC mattscamp@gmail.com"]
+description = "Useful string search algorithms"
+repository = "https://github.com/mattscamp/matcha"
+keywords = ["search", "string", "brute", "naive", "tbm", "tuned", "boyer", "moore"]
 
 [dependencies]
 memcmp = "0.0.6"
