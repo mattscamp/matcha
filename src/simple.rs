@@ -12,9 +12,13 @@ impl SimpleMatcher {
         let haystack_len = haystack.len();
 
         while i < haystack_len {
-            if needle[0] == haystack[i] { // is the current char == first char?
+            if needle[0] == haystack[i] {
+                // is the current char == first char?
                 if &needle.memcmp(&haystack[i..(i + needle_len)]) == &true {
-                    res.push( Match { start: i, end: i + needle_len } );
+                    res.push(Match {
+                        start: i,
+                        end: i + needle_len,
+                    });
                     i = i + needle_len - 1;
                 }
             }
@@ -29,7 +33,8 @@ impl SimpleMatcher {
         let haystack_len = haystack.len();
 
         while i < haystack_len {
-            if needle[0] == haystack[i] { // is the current char == first char?
+            if needle[0] == haystack[i] {
+                // is the current char == first char?
                 if &needle.memcmp(&haystack[i..(i + needle_len)]) == &true {
                     return true;
                 }

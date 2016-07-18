@@ -30,7 +30,7 @@ fn get_md2(needle: &[u8], len: usize) -> usize {
 
     (y - x) as usize
 }
- 
+
 /// The main BruteForceMatcher type for setting configuration and running BruteForceMatcher.
 pub struct TBMMatcher;
 
@@ -39,7 +39,7 @@ impl TBMMatcher {
     pub fn matches(needle: &[u8], haystack: &[u8]) -> Vec<Match> {
         let needle_len = needle.len(); // isize to avoid so many castings
         let haystack_len = haystack.len(); // isize to avoid so many castings
-    
+
         let mut matches = Vec::new();
 
         // Our preprocessors
@@ -49,16 +49,22 @@ impl TBMMatcher {
 
         'main: while i < haystack_len {
             let mut k = r[haystack[i] as usize];
-            
-            while k != 0 {         
+
+            while k != 0 {
                 i += k;
-                if i >= haystack_len { break 'main; }
+                if i >= haystack_len {
+                    break 'main;
+                }
                 k = r[haystack[i] as usize];
                 i += k;
-                if i >= haystack_len { break 'main; }
+                if i >= haystack_len {
+                    break 'main;
+                }
                 k = r[haystack[i] as usize];
                 i += k;
-                if i >= haystack_len { break 'main; }
+                if i >= haystack_len {
+                    break 'main;
+                }
                 k = r[haystack[i] as usize];
             }
 
@@ -67,7 +73,10 @@ impl TBMMatcher {
             }
 
             if &needle.memcmp(&haystack[i..(i + needle_len)]) == &false && i < haystack_len {
-                matches.push(Match { start: (i + 1 - needle_len), end: (i + 1)});
+                matches.push(Match {
+                    start: (i + 1 - needle_len),
+                    end: (i + 1),
+                });
                 i += needle_len;
             }
 
