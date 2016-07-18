@@ -1,0 +1,58 @@
+use memcmp::Memcmp;
+use super::Match;
+
+pub struct SimpleMatcher;
+
+impl SimpleMatcher {
+    /// Finds matches from a vector of bytes and returns a vector of Matches
+    pub fn matches(needle: &[u8], haystack: &[u8]) -> Vec<Match> {
+        let mut i = 0;
+        let mut res = Vec::new();
+        let needle_len = needle.len();
+        let haystack_len = haystack.len();
+
+        while i < haystack_len {
+            if needle[0] == haystack[i] { // is the current char == first char?
+                if &needle.memcmp(&haystack[i..(i + needle_len)]) == &true {
+                    res.push( Match { start: i, end: i + needle_len } );
+                    i = i + needle_len - 1;
+                }
+            }
+            i += 1;
+        }
+        res
+    }
+
+    pub fn contains(needle: &[u8], haystack: &[u8]) -> bool {
+        let mut i = 0;
+        let needle_len = needle.len();
+        let haystack_len = haystack.len();
+
+        while i < haystack_len {
+            if needle[0] == haystack[i] { // is the current char == first char?
+                if &needle.memcmp(&haystack[i..(i + needle_len)]) == &true {
+                    return true;
+                }
+            }
+            i += 1;
+        }
+        false
+    }
+}
+
+#[test]
+fn test_simple_matches_len() {
+    let s = String::from("test hello there and hello again");
+    let needle = String::from("hello");
+    let matches: Vec<Match> = SimpleMatcher::matches(needle.as_bytes(), s.as_bytes());
+    assert_eq!(matches.len(), 2);
+}
+
+#[test]
+fn test_simple_matches_pos() {
+    let s = String::from("test hello there and hello again");
+    let needle = String::from("hello");
+    let matches: Vec<Match> = SimpleMatcher::matches(needle.as_bytes(), s.as_bytes());
+    assert_eq!(matches[0].start, 5);
+    assert_eq!(matches[0].end, 10);
+}

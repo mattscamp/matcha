@@ -1,0 +1,7 @@
+[package]
+name = "str_search"
+version = "0.1.0"
+authors = ["MC mattscamp@gmail.com"]
+
+[dependencies]
+memcmp = "0.0.6"
