@@ -13,7 +13,6 @@ impl SimpleMatcher {
         let haystack_len = haystack.len();
 
         while i < haystack_len {
-            print!("at {} \n", i);
             if needle[0] == haystack[i] {
                 // is the current char == first char?
                 if i + needle_len > haystack_len {
