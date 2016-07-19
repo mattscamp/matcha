@@ -56,19 +56,9 @@ impl TBMMatcher {
                     break 'main;
                 }
                 k = r[haystack[i] as usize];
-                i += k;
-                if i >= haystack_len {
-                    break 'main;
-                }
-                k = r[haystack[i] as usize];
-                i += k;
-                if i >= haystack_len {
-                    break 'main;
-                }
-                k = r[haystack[i] as usize];
             }
 
-            if i >= haystack_len {
+            if i >= haystack_len || (i + needle_len) > haystack_len {
                 break;
             }
 
@@ -95,7 +85,6 @@ fn test_tbm_matches_len() {
     assert_eq!(matches.len(), 2);
 }
 
-
 #[test]
 fn test_tbm_matches_pos() {
     let s = String::from("test hello there and hello again");
@@ -104,3 +93,14 @@ fn test_tbm_matches_pos() {
     assert_eq!(matches[0].start, 5);
     assert_eq!(matches[0].end, 10);
 }
+
+#[test]
+fn test_tbm_out_of_space() {
+    let b: Vec<u8> =
+        vec![47, 114, 111, 111, 116, 47, 116, 101, 115, 116, 115, 47, 106, 115, 111, 110, 47, 116,
+             97, 114, 103, 101, 116, 47, 100, 101, 98, 117, 103, 47, 106, 115, 111, 110, 45, 54,
+             98, 52, 56, 52, 99, 51, 102, 57, 49, 56, 54, 102, 50, 101, 98, 46, 100, 58, 32, 115,
+             114, 99, 47, 108, 105, 98, 46, 114, 115, 32 ];
+    let matches: Vec<Match> = TBMMatcher::matches("suki".as_bytes(), &b);
+}
+
