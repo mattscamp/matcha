@@ -45,7 +45,7 @@ impl TBMMatcher {
         let mut r: Vec<usize> = bad_character_table(&needle, needle_len);
         let shift = get_md2(&needle, needle_len);
 
-        'outer: while i <= haystack_len {
+        'outer: while (i + needle_len - 1) < haystack_len {
             let mut k = r[haystack[i + needle_len - 1] as usize];
 
             'inner: while k != 0 {
